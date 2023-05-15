@@ -23,11 +23,17 @@ const getSongs = function (query) {
             console.log(err)
         })
 }
-
 let customInputField = document.querySelector('.input-group .form-control')
+let customField = document.querySelector('.input-group')
+let searchBtn = document.getElementById('search-navbar')
+searchBtn.addEventListener('click', () =>
+{
+    customField.classList.remove('d-none')
+})
+
 let customSearchButton = document.querySelector(
   '#button-addon2')
-  customSearchButton.addEventListener('click', () => {
+ customSearchButton.addEventListener('click', () => {
     let ul = document.getElementById('ul')
-                 ul.innerHTML = ''
-    getSongs(customInputField.value);})
+                  ul.innerHTML = ''
+     getSongs(customInputField.value);})
