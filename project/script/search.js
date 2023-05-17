@@ -1,10 +1,10 @@
-let API = 'https://striveschool-api.herokuapp.com/api/deezer/search?q='
+let API = "https://striveschool-api.herokuapp.com/api/deezer/search?q=";
 
-let searchBtn = document.getElementById('search-navbar')
-let mainSearch = document.getElementById('rowPrincipal')
+let searchBtn = document.getElementById("search-navbar");
+let mainSearch = document.getElementById("rowPrincipal");
 
-searchBtn.addEventListener('click', () => {
-    let searchTemplate = `
+searchBtn.addEventListener("click", () => {
+  let searchTemplate = `
         <div class="container-fluid">
         <h2 class="my-4">Cerca</h2>
         <div class="row">
@@ -85,44 +85,43 @@ searchBtn.addEventListener('click', () => {
             </div>
         </div>
         </div>
-    `
-    mainSearch.innerHTML = searchTemplate
-    let customInputField = document.querySelector('.input-group .form-control')
-    let customSearchButton = document.querySelector('#button-addon1')
-    customSearchButton.addEventListener('click', () => {
-    let allCard = document.querySelectorAll('.card h3')
+    `;
+  mainSearch.innerHTML = searchTemplate;
+  let customInputField = document.querySelector(".input-group .form-control");
+  let customSearchButton = document.querySelector("#button-addon1");
+  customSearchButton.addEventListener("click", () => {
+    let allCard = document.querySelectorAll(".card h3");
 
-       getSongs(customInputField.value);
+    getSongs(customInputField.value);
+  });
+});
+
+const getSongs = function (query) {
+  fetch(API + query)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Error getting the images");
+      }
     })
-})
-
-    const getSongs = function (query) {
-    fetch(API + query)
-        .then((res) => {
-            if (res.ok) {
-                return res.json()
-            } else {
-                throw new Error('Error getting the images')
-            }
-        })
-        .then((songs) => {
-            console.log(songs.data)
-            let data = songs.data
-            let allCard = document.querySelectorAll('.card h4')
-            allLink = document.querySelectorAll('.card a')
-            allCard.forEach(h4=>{h4.classList.add('z-3')})
-            let imgCard = document.querySelectorAll('.card img')
-            console.log(allCard);
-           for (let i = 0; i < allCard.length; i++) {
-                allCard[i].innerHTML = data[i].title
-                imgCard[i].src = data[i].album.cover_medium
-                allLink[i].href = '../album.html?albumID='+ data[i].album.id
-           }
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-}
-
-
-
+    .then((songs) => {
+      console.log(songs.data);
+      let data = songs.data;
+      let allCard = document.querySelectorAll(".card h4");
+      allLink = document.querySelectorAll(".card a");
+      allCard.forEach((h4) => {
+        h4.classList.add("z-3");
+      });
+      let imgCard = document.querySelectorAll(".card img");
+      console.log(allCard);
+      for (let i = 0; i < allCard.length; i++) {
+        allCard[i].innerHTML = data[i].title;
+        imgCard[i].src = data[i].album.cover_medium;
+        allLink[i].href = "index.html?albumID=" + data[i].album.id;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
